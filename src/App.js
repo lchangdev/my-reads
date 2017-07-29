@@ -21,21 +21,21 @@ class BooksApp extends React.Component {
     const index = indexOf(this.state.books, book);
     const shelf = event.target.value;
 
-    let updates = {
-      books: update(this.state.books, {$push: [ book ]})
-    }
+    if (index < 0) {
+      book.shelf = shelf;
 
-    if (index >= 0) {
-      updates = {
+      this.setState({
+        books: update(this.state.books, {$push: [ book ]})
+      });
+    } else {
+      this.setState({
         books: update(this.state.books, {
           [index]: {
             shelf: { $apply: () => shelf }
           }
         })
-      };
+      });
     }
-
-    this.setState(() => (updates));
 
     BooksAPI.update(book, shelf);
   }
