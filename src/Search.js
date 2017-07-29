@@ -30,7 +30,7 @@ class Search extends Component {
     }
 
     BooksAPI
-      .search(this.state.query)
+      .search(encodeURIComponent(this.state.query))
       .then((results) => {
         if (results.error)  {
           return;
