@@ -21,15 +21,21 @@ class BooksApp extends React.Component {
     const index = indexOf(this.state.books, book);
     const shelf = event.target.value;
 
-    this.setState((state) => ({
-      books: update(state.books, {
-        [index]: {
-          shelf: {
-            $apply: () => shelf
+    let updates = {
+      books: update(this.state.books, {$push: [ book ]})
+    }
+
+    if (index >= 0) {
+      updates = {
+        books: update(this.state.books, {
+          [index]: {
+            shelf: { $apply: () => shelf }
           }
-        }
-      })
-    }))
+        })
+      };
+    }
+
+    this.setState(() => (updates));
 
     BooksAPI.update(book, shelf);
   }
@@ -78,7 +84,12 @@ class BooksApp extends React.Component {
         <Route
           exact
           path="/search"
-          render={() => (<Search />)}
+          render={() => (
+            <Search
+              books={this.state.books}
+              onChangeShelf={this.onChangeShelf}
+            />
+          )}
         />
       </div>
     )

@@ -14,8 +14,8 @@ const Bookshelf = props => {
           {
             books
               .filter((book) => (book.shelf === camelCase(shelf)))
-              .map((book) => (
-                <li key={book.id}>
+              .map((book, index) => (
+                <li key={index}>
                   <Book
                     book={book}
                     onChangeShelf={onChangeShelf}
