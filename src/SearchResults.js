@@ -43,6 +43,7 @@ class SearchResults extends Component {
 
 SearchResults.propTypes = {
   books: PropTypes.array,
+  onChangeShelf: PropTypes.func,
   results: PropTypes.array
 };
 

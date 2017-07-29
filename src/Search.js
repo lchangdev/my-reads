@@ -1,4 +1,5 @@
 import * as BooksAPI from './BooksAPI'
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { isEmpty } from 'lodash';
 
@@ -15,6 +16,10 @@ class Search extends Component {
     };
 
     this.updateQuery = this.updateQuery.bind(this);
+  }
+
+  updateQuery(query) {
+    this.setState({ query }, () => this.updateResults());
   }
 
   updateResults() {
@@ -35,10 +40,6 @@ class Search extends Component {
       });
   }
 
-  updateQuery(query) {
-    this.setState({ query }, () => this.updateResults());
-  }
-
   render() {
     const { query, results } = this.state;
 
@@ -51,12 +52,16 @@ class Search extends Component {
         <SearchResults
           books={this.props.books}
           onChangeShelf={this.props.onChangeShelf}
-          query={query}
           results={results}
         />
       </div>
     );
   }
 }
+
+Search.propTypes = {
+  books: PropTypes.array,
+  onChangeShelf: PropTypes.func
+};
 
 export default Search;
